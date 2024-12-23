@@ -43,9 +43,16 @@ public class Incomplete extends MyFragment {
     }
 
 
+    @Override
     public void updateList() {
         assignmentList.clear();
         assignmentList.addAll(sqLiteHelper.getIncompleteAssignments());
+        Collections.sort(assignmentList, new Comparator<Assignment>() {
+            @Override
+            public int compare(Assignment a1, Assignment a2) {
+                return a1.getEndDateTime().compareTo(a2.getEndDateTime());
+            }
+        });
         adapter.notifyDataSetChanged();
     }
 
@@ -60,7 +67,7 @@ public class Incomplete extends MyFragment {
             Log.d("IncompleteFragment", "Layout inflation 성공!");
         }
 
-        sqLiteHelper = new SQLiteHelper(getContext());
+        sqLiteHelper = new SQLiteHelper(getContext()); //데이터베이스 이용
         recyclerView = v.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         assignmentList = new ArrayList<>();
@@ -99,7 +106,7 @@ public class Incomplete extends MyFragment {
         return v;
     }
 
-    // 사용자 선택에 따른 정렬
+    // 사용자 선택에 따른 정렬. 기본 마감일 빠른순
     private void sortAssignments(int position) {
         if (position == 0) { // '마감일 빠른순'
             Collections.sort(assignmentList, new Comparator<Assignment>() {

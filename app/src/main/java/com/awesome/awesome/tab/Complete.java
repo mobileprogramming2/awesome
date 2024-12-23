@@ -43,7 +43,7 @@ public class Complete extends MyFragment {
         Collections.sort(assignmentList, new Comparator<Assignment>() {
             @Override
             public int compare(Assignment a1, Assignment a2) {
-                return a1.getEndDateTime().compareTo(a2.getEndDateTime());
+                return a2.getEndDateTime().compareTo(a1.getEndDateTime());
             }
         }.reversed());
         adapter.notifyDataSetChanged();
@@ -85,6 +85,8 @@ public class Complete extends MyFragment {
                 R.array.sort_array, android.R.layout.simple_spinner_item);
         priorityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sortSpinner.setAdapter(priorityAdapter);
+
+        sortSpinner.setSelection(1);
 
         sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
