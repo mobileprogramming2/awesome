@@ -11,21 +11,24 @@ public class Assignment implements Serializable {
     int ID;
     String name;
     LocalDateTime endDateTime;
+    String subject;
     Status status;
     Priority priority;
 
-    public Assignment(String name, LocalDateTime endDateTime) {
+    public Assignment(String name, LocalDateTime endDateTime, String subject) {
         this.name = name;
         this.endDateTime = endDateTime;
+        this.subject = subject;
         status = Status.WAITING;
     }
 
-    public Assignment(int ID, String name, LocalDateTime endDateTime, Status status, Priority priority) {
+    public Assignment(int ID, String name, LocalDateTime endDateTime, Status status, Priority priority, String subject) {
         this.ID = ID;
         this.name = name;
         this.endDateTime = endDateTime;
         this.status = status;
         this.priority = priority;
+        this.subject = subject;
     }
 
     public int getID() {
@@ -67,5 +70,9 @@ public class Assignment implements Serializable {
     public void setPriority(Priority priority) {
         this.priority = priority;
     }
+
+    public String getSubject(){return subject;}
+
+    public void setSubject(String subject){this.subject = subject;}
 
 }

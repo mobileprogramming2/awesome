@@ -52,6 +52,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
         // 임시로 string으로 출력
         String endDateTime = items.get(position).getEndDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         holder.assignmentEndDateTime.setText(endDateTime);
+        holder.assignmentSubject.setText(items.get(position).getSubject());
         holder.assignmentStatus.setText(items.get(position).getStatus().toString());
     }
 
@@ -66,6 +67,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
         TextView assignmentName;
         TextView assignmentEndDateTime;
         TextView assignmentStatus;
+        TextView assignmentSubject;
         Button modifyBtn;
         SQLiteHelper sqLiteHelper;
         private Spinner assignmentStatusSpinner;
@@ -77,6 +79,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
             assignmentName = itemView.findViewById(R.id.listAssignmentName);
             assignmentEndDateTime = itemView.findViewById(R.id.listAssignmentDate);
             assignmentStatus = itemView.findViewById(R.id.listAssignmentStatus);
+            assignmentSubject = itemView.findViewById(R.id.listAssignmentSubject);
             modifyBtn = itemView.findViewById(R.id.modifyBtn);
             innerFragment = fragment;
 

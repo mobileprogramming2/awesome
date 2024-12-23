@@ -95,8 +95,27 @@
     <Spinner
         android:id="@+id/prioritySpinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"/>
 
+    <TextView
+        android:id="@+id/subjectTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:text="과목 이름"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/subjectEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="과목 이름을 입력하세요"
+        android:inputType="text"
+        android:padding="12dp"
+        android:background="@drawable/border" />
 
     <Button
         android:id="@+id/submitBtn"
