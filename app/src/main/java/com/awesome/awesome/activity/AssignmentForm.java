@@ -31,6 +31,7 @@ public class AssignmentForm extends AppCompatActivity {
     private EditText inputDateTime;
     private EditText inputAssignmentName;
     private Button submitBtn;
+    private EditText inputSubjectName;
 
     private LinearLayout statusLayout;
     private Spinner statusSpinner,  prioritySpinner;
@@ -38,6 +39,7 @@ public class AssignmentForm extends AppCompatActivity {
     private int selectedHour, selectedMinute;
     private Status selectedStatus;
     private Priority selectedPriority;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class AssignmentForm extends AppCompatActivity {
         statusLayout = (LinearLayout)findViewById(R.id.statusLayout);
         statusSpinner = (Spinner) findViewById(R.id.statusSpinner);
         prioritySpinner = (Spinner) findViewById(R.id.prioritySpinner);
+        inputSubjectName = (EditText) findViewById(R.id.subjectEt);
 
         sqLiteHelper = new SQLiteHelper(getApplicationContext());
 
@@ -71,6 +74,7 @@ public class AssignmentForm extends AppCompatActivity {
             statusSpinner.setSelection(assignment.getStatus().ordinal());
 
             prioritySpinner.setSelection(Priority.PriorityToInt(assignment.getPriority()));  // 수정할 때 우선 순위 설정
+            inputSubjectName.setText(assignment.getSubject());
         }
 
         statusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -111,13 +115,14 @@ public class AssignmentForm extends AppCompatActivity {
             public void onClick(View v) {
                 String assignmentName = inputAssignmentName.getText().toString();
                 String dateTime = inputDateTime.getText().toString();
+                String subject = inputSubjectName.getText().toString();
 
                 if (assignmentName.isEmpty() || dateTime.isEmpty()) {
                     Toast.makeText(AssignmentForm.this, "모든 필드를 입력하세요!", Toast.LENGTH_SHORT).show();
                 } else {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                     Assignment newAssignment = new Assignment(assignment != null ? assignment.getID() : -1, assignmentName, LocalDateTime.parse(dateTime, formatter),
-                            selectedStatus, selectedPriority);
+                            selectedStatus, selectedPriority, subject);
 
                     if (assignment == null) {
                         // 생성
