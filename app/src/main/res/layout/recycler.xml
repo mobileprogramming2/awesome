@@ -4,62 +4,65 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:columnCount="5"
-    android:rowCount="2"
+    android:columnCount="3"
+    android:rowCount="3"
     android:padding="10dp">
 
     <TextView
-        android:id="@+id/assignmentID"
-        android:text="id"
-        android:visibility="gone"
-        />
+    android:id="@+id/assignmentID"
+    android:text="id"
+    android:visibility="gone" />
 
+    <!-- 과목 필드 (첫 번째 행, 첫 번째 열) -->
     <TextView
-        android:id="@+id/listAssignmentName"
-        android:layout_column="0"
-        android:layout_row="0"
-        android:layout_columnSpan="3"
-        android:text="과제 이름"
-        android:textSize="30dp"
-        android:textFontWeight="400"
-        android:layout_gravity="fill_horizontal" />
+    android:id="@+id/listAssignmentSubject"
+    android:layout_column="0"
+    android:layout_row="0"
+    android:text="과목"
+    android:textSize="14dp"
+    android:textFontWeight="200"
+    android:layout_gravity="fill_horizontal"
+    android:layout_columnWeight="1"/>
 
+    <!-- 과제 이름 필드 (두 번째 행, 첫 번째 열) -->
     <TextView
-        android:id="@+id/listAssignmentDate"
-        android:layout_column="0"
-        android:layout_row="1"
-        android:layout_columnSpan="2"
-        android:text="날짜"
-        android:textSize="20dp"
-        android:textFontWeight="200"
-        android:layout_gravity="fill_horizontal"/>
+    android:id="@+id/listAssignmentName"
+    android:layout_column="0"
+    android:layout_row="1"
+    android:text="과제 이름"
+    android:textSize="20dp"
+    android:textFontWeight="400"
+    android:layout_gravity="fill_horizontal"
+    android:layout_columnWeight="1"/>
 
+    <!-- 상태 필드 (두 번째 행, 두 번째 열) -->
     <TextView
-        android:id="@+id/listAssignmentSubject"
-        android:layout_column="3"
-        android:layout_row="1"
-        android:layout_columnSpan="2"
-        android:text="과목"
-        android:textSize="20dp"
-        android:textFontWeight="200"
-        android:layout_gravity="fill_horizontal"/>
+    android:id="@+id/listAssignmentStatus"
+    android:layout_column="1"
+    android:layout_row="1"
+    android:text="상태"
+    android:textSize="16dp"
+    android:textFontWeight="200"
+    android:layout_columnWeight="1"/>
 
-    <TextView
-        android:id="@+id/listAssignmentStatus"
-        android:layout_column="3"
-        android:layout_row="0"
-        android:layout_rowSpan="2"
-        android:text="상태"
-        android:textSize="20dp"
-        android:textFontWeight="200" />
-
+    <!-- 수정하기 버튼 (두 번째 행, 세 번째 열) -->
     <Button
-        android:id="@+id/modifyBtn"
-        android:layout_column="4"
-        android:layout_row="0"
-        android:layout_rowSpan="2"
-        android:text="수정하기"
-        android:padding="10dp"/>
+    android:id="@+id/modifyBtn"
+    android:layout_column="2"
+    android:layout_row="1"
+    android:text="수정하기"
+    android:padding="10dp"
+    android:layout_columnWeight="1"/>
 
+    <!-- 날짜 필드 (세 번째 행, 첫 번째 열) -->
+    <TextView
+    android:id="@+id/listAssignmentDate"
+    android:layout_column="0"
+    android:layout_row="2"
+    android:text="날짜"
+    android:textSize="14dp"
+    android:textFontWeight="200"
+    android:layout_gravity="fill_horizontal"
+    android:layout_columnWeight="1"/>
 
-</GridLayout>
+    </GridLayout>

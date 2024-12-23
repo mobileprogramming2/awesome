@@ -58,7 +58,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             String dateTimeString = cursor.getString(2); // SQLite DATETIME 값
             LocalDateTime endDateTime = LocalDateTime.parse(dateTimeString, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
-            // 0 : id, 1 : name, 2 : end date, 3: status, 4 : priority, 5: subject
+            /// 0 : id, 1 : name, 2 : end date, 3: status, 4 : priority, 5: subject
             Assignment assignment = new Assignment(cursor.getInt(0), cursor.getString(1), endDateTime, Status.intToStatus(cursor.getInt(3)),
                     Priority.intToPriority(cursor.getInt(4)), cursor.getString(5));
             result.add(assignment);

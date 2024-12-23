@@ -1,7 +1,10 @@
 package com.awesome.awesome.activity;
 
+import android.Manifest;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,8 +14,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
+import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.awesome.awesome.R;
 import com.awesome.awesome.Status;
@@ -34,12 +44,14 @@ public class AssignmentForm extends AppCompatActivity {
     private EditText inputSubjectName;
 
     private LinearLayout statusLayout;
-    private Spinner statusSpinner,  prioritySpinner;
+    private Spinner statusSpinner, prioritySpinner;
     private int selectedYear, selectedMonth, selectedDay;
     private int selectedHour, selectedMinute;
     private Status selectedStatus;
     private Priority selectedPriority;
 
+    private Switch notificationSwitch;
+    private static final String CHANNEL_ID = "assignment_channel";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +61,11 @@ public class AssignmentForm extends AppCompatActivity {
         inputAssignmentName = (EditText) findViewById(R.id.assignmentNameEt);
         inputDateTime = (EditText) findViewById(R.id.dateTimeEt);
         submitBtn = (Button) findViewById(R.id.submitBtn);
-        statusLayout = (LinearLayout)findViewById(R.id.statusLayout);
+        statusLayout = (LinearLayout) findViewById(R.id.statusLayout);
         statusSpinner = (Spinner) findViewById(R.id.statusSpinner);
         prioritySpinner = (Spinner) findViewById(R.id.prioritySpinner);
         inputSubjectName = (EditText) findViewById(R.id.subjectEt);
+        notificationSwitch = findViewById(R.id.notificationSwitch);
 
         sqLiteHelper = new SQLiteHelper(getApplicationContext());
 
@@ -61,7 +74,7 @@ public class AssignmentForm extends AppCompatActivity {
         ArrayAdapter<Priority> priorityAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, priorityList);
         prioritySpinner.setAdapter(priorityAdapter);
 
-        Assignment assignment = (Assignment)getIntent().getSerializableExtra("Assignment");
+        Assignment assignment = (Assignment) getIntent().getSerializableExtra("Assignment");
         if (assignment != null) {
             statusLayout.setVisibility(View.VISIBLE);
             inputAssignmentName.setText(assignment.getName());
@@ -127,10 +140,13 @@ public class AssignmentForm extends AppCompatActivity {
                     if (assignment == null) {
                         // 생성
                         sqLiteHelper.insertNewAssignment(newAssignment);
-                    }
-                    else {
+                    } else {
                         // 수정
                         sqLiteHelper.modifyAssignments(assignment.getID(), newAssignment);
+                    }
+
+                    if (notificationSwitch.isChecked()) {
+                        triggerNotification(assignmentName, dateTime);
                     }
 
                     finish();
@@ -195,5 +211,55 @@ public class AssignmentForm extends AppCompatActivity {
                 currentHour, currentMinute, true);
 
         timePickerDialog.show();
+    }
+
+    private static final int REQUEST_CODE_NOTIFICATION_PERMISSION = 1;
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Assignment Notifications";
+            String description = "알림 설정된 과제에 대한 알림";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    private void triggerNotification(String assignmentName, String dateTime) {
+        // 권한이 있는지 확인
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            // 권한이 없으면 요청
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, REQUEST_CODE_NOTIFICATION_PERMISSION);
+            return;
+        }
+
+        // 권한이 있으면 알림을 보냄
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_notification) // 알림 아이콘
+                .setContentTitle("과제 알림")
+                .setContentText(assignmentName + " - " + dateTime)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify((int) System.currentTimeMillis(), builder.build());
+    }
+
+    // 권한 요청 결과 처리
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE_NOTIFICATION_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // 권한이 허용되었을 때 알림을 트리거
+                triggerNotification("과제 이름", "날짜/시간");
+            } else {
+                // 권한이 거부된 경우 처리
+                Toast.makeText(this, "알림 권한이 거부되었습니다.", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
