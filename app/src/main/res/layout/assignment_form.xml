@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".activity.AssignmentForm">
+
+    <!-- 뒤로 가기 버튼 -->
+    <Button
+        android:id="@+id/backBtn"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/border"
+        android:text="뒤로 가기"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/assignmentNameTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:text="과제 이름"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/assignmentNameEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="과제 이름을 입력하세요"
+        android:inputType="text"
+        android:padding="12dp"
+        android:background="@drawable/border" />
+
+    <TextView
+        android:id="@+id/dateTimeTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="마감 날짜 및 시간"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp" />
+
+    <EditText
+        android:id="@+id/dateTimeEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="마감 날짜와 시간을 선택하세요"
+        android:focusable="false"
+        android:padding="12dp"
+        android:background="@drawable/border"
+        android:drawableEnd="@android:drawable/ic_menu_my_calendar" />
+
+    <LinearLayout
+        android:id="@+id/statusLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/statusTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="진행 상태"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp" />
+
+        <Spinner
+            android:id="@+id/statusSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/priority"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="우선 순위"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp" />
+
+    <Spinner
+        android:id="@+id/prioritySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/subjectTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:text="과목 이름"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/subjectEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="과목 이름을 입력하세요"
+        android:inputType="text"
+        android:padding="12dp"
+        android:background="@drawable/border" />
+
+    <!-- 알림 토글 -->
+    <TextView
+        android:id="@+id/notificationTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="알림 설정"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp" />
+
+    <Switch
+        android:id="@+id/notificationSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="알림 받기"
+        android:checked="true"
+        android:padding="16dp"/>
+
+    <Button
+        android:id="@+id/submitBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="제출"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:textColor="@android:color/black"
+        android:padding="12dp"
+        android:background="@drawable/border"/>
+
+
+</LinearLayout>

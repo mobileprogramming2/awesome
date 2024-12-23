@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_array">
+        <item>마감일 빠른순</item>
+        <item>마감일 느린순</item>
+        <item>우선순위 높은순</item>
+        <item>우선순위 낮은순</item>
+    </string-array>
+</resources>
